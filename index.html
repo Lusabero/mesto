@@ -5,26 +5,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./normalize.css">
+    <link rel="stylesheet" href="./style.css">
     <title>MESTO</title>
 </head>
 
-<body>
-    <div class="Page">
-        <header class="header">
-            <img class="header__logo" src="./images/header/logo.svg" alt="">
-            <div class="header__line"> </div>
+<body class="page">
+    <div class="page__container">
+        <header class="header basic">
+            <img class="header__logo" src="./images/header/logo.svg" alt="логотип">
+            <img class="header__line" src="./images/header/Line.png" alt="">
         </header>
         <main class="content">
-            <section class="profile">
+            <section class="profile basic">
                 <div class="profile__avatar"></div>
                 <div class="profile__info">
-                    <h1 class="profile__info-title"></h1>
-                    <p class="profil__info-subtitle"></p>
+                    <h1 class="profile__info-title">Жак-Ив Кусто</h1>
+                    <p class="profil__info-subtitle">Исследователь океана</p>
                     <button class="profil__info-button"></button>
                 </div>
                 <button class="profile__button-add"></button>
             </section>
-            <section class="elements">
+            <section class="elements basic">
                 <article class="elements__element">
                     <div class="elements__card">
                         <img class="card__image" src="./images/header/logo.svg" alt="">
@@ -36,7 +38,7 @@
                 </article>
             </section>
         </main>
-        <footer class="footer">
+        <footer class="footer basic">
             <p class="footer__copyright">&COPY; 2021 Овикян Лиза</p>
         </footer>
     </div>
