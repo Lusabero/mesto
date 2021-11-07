@@ -76,6 +76,9 @@
     font-size: 42px;
     line-height: 1.14;
     color: #FFFFFF;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .profile__info-subtitle {
@@ -87,6 +90,9 @@
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .profile__info-button {
@@ -162,6 +168,9 @@
     font-size: 24px;
     line-height: 29px;
     color: #000000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .elements__like {
@@ -182,4 +191,85 @@
     font-size: 18px;
     line-height: 22px;
     color: #545454;
+}
+
+.pop-up {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .8);
+    z-index: 2;
+    /* display: flex; */
+    display: none;
+}
+
+.pop-up__container {
+    position: relative;
+    min-width: 430px;
+    min-height: 330px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    margin: auto;
+}
+
+.pop-up__form {
+    display: flex;
+    flex-direction: column;
+    max-width: 358px;
+    margin: 0 36px 37px 36px;
+}
+
+.pop-up__title {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0;
+    padding: 34px 64px 54px 36px;
+}
+
+.pop-up__input {
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    padding-bottom: 13px;
+}
+
+.pop-up__button {
+    width: 100%;
+    margin: 31px 0 0 0;
+    min-height: 50px;
+    background: #000000;
+    border-radius: 2px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.pop-up__close {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    background-image: url(./images/Close-icon.png);
+    background-repeat: no-repeat;
+    outline: none;
+    border: 0;
+    background-color: #000000;
+    width: 32px;
+    height: 32px;
 }
