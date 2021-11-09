@@ -4,20 +4,42 @@
 
 .page__container {
     max-width: 1280px;
+    min-width: 320px;
     background-color: #000000;
 }
 
 .header {
     max-width: 880px;
+    min-width: 320px;
     padding-top: 45px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
 
+@media (max-width: 900px) {
+    .header {
+        max-width: 740px;
+    }
+}
+
+@media (max-width: 770px) {
+    .header {
+        max-width: 320px;
+        padding-top: 28px;
+    }
+}
+
 .header__logo {
     max-width: 142px;
     margin: 0 0 41px 0;
+}
+
+@media (max-width: 770px) {
+    .header__logo {
+        max-width: 103px;
+        margin: 0 0 27px 0;
+    }
 }
 
 .header__logo:hover {
@@ -35,15 +57,40 @@
     justify-content: space-between;
 }
 
+
+/* @media (max-width: 770px) {
+    .profile {
+        display: flex;
+        flex-direction: column;
+    }
+} */
+
 .profile-container {
     max-width: 880px;
-    margin: auto;
+    min-width: 320px;
     padding-top: 40px;
     display: grid;
     grid-template-columns: repeat(2, minmax(min-content, max-content));
     justify-content: space-between;
     grid-template-rows: 120px;
 }
+
+@media (max-width: 900px) {
+    .profile-container {
+        max-width: 740px;
+    }
+}
+
+
+/* @media (max-width: 770px) {
+    .profile-container {
+        max-width: 320px;
+        padding-top: 42px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+} */
 
 .profile__avatar {
     max-width: 168px;
@@ -65,6 +112,15 @@
     grid-column-gap: 18px;
     margin-left: 30px;
 }
+
+
+/* @media (max-width: 900px) {
+    .profile__info {
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+    }
+} */
 
 .profile__info-title {
     grid-area: title;
@@ -137,11 +193,21 @@
 
 .elements {
     max-width: 880px;
-    margin-top: 51px;
+    min-width: 320px;
+    padding-top: 51px;
     display: grid;
     grid-template-columns: repeat(3, 282px);
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 20px 17px;
+}
+
+@media (max-width: 900px) {
+    .elements {
+        max-width: 740px;
+        grid-template-columns: repeat(2, 282px);
+        grid-template-rows: repeat(3, 1fr);
+        justify-content: center;
+    }
 }
 
 .elements__element {
@@ -187,10 +253,22 @@
     height: 19px;
 }
 
+.elements__like:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
 .footer {
     max-width: 880px;
+    min-width: 320px;
     margin-top: 66px;
     padding-bottom: 60px;
+}
+
+@media (max-width: 900px) {
+    .footer {
+        max-width: 740px;
+    }
 }
 
 .footer__copyright {
