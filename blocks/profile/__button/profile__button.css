@@ -1,0 +1,9 @@
+.profile__button {
+    justify-self: end;
+}
+
+@media (max-width: 770px) {
+    .profile__button {
+        margin: auto;
+    }
+}

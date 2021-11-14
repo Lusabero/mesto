@@ -1,0 +1,15 @@
+.elements__element {
+    max-width: 282px;
+    height: 361px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    color: black;
+}
+
+@media (max-width: 770px) {
+    .elements__element {
+        margin: auto;
+    }
+}
