@@ -32,10 +32,17 @@ const jobInfo = document.querySelector('#jobInfo');
 nameInput.value = nameInfo.textContent;
 jobInput.value = jobInfo.textContent;
 
+
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function formSubmitHandler(evt) {
     evt.preventDefault();
+    const userName = nameInput.value;
+    const userJob = jobInput.value;
+    nameInfo.textContent = userName;
+    jobInfo.textContent = userJob;
+    closePopup();
+
 
 }
 
