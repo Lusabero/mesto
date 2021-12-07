@@ -6,6 +6,7 @@
     grid-template-columns: repeat(2, minmax(min-content, max-content));
     justify-content: space-between;
     grid-template-rows: 120px;
+    margin: auto;
 }
 
 @media (max-width: 900px) {

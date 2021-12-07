@@ -9,15 +9,11 @@ const openPopup = function() {
 const closePopup = function() {
     popupElement.classList.remove('popup_is-opened');
 }
-const closePopupByClickOverlay = function(event) {
-    if (event.target === event.currentTarget) {
-        closePopup();
-    }
-};
+
 
 popupOpenButtonElement.addEventListener('click', openPopup);
 popupCloseButtonElement.addEventListener('click', closePopup);
-popupElement.addEventListener('click', closePopupByClickOverlay);
+
 
 
 
