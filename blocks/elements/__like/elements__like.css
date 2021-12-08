@@ -1,6 +1,9 @@
 .elements__like {
     width: 22px;
     height: 19px;
+    background-color: transparent;
+    background-image: url(../../../images/like.svg);
+    border: none;
 }
 
 .elements__like:hover {

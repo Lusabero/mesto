@@ -13,10 +13,10 @@
 
 @media (max-width: 770px) {
     .profile__info-button {
-        /* margin-left: 10px; */
         width: 18px;
         height: 18px;
-        background-size: 8px;
+        margin-bottom: 7px;
+        /* background-size: cover; */
     }
 }
 
