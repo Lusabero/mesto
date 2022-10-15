@@ -30,61 +30,9 @@
                 <button class="profile__button-add" type="button"></button>
 
             </section>
-            <section class="elements">
-                <article class="elements__element">
-
-                    <img class="elements__image" src="./images/mesto.jpg" alt="Карачаевск">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Карачаевск</h2>
-                        <button class="elements__like" type="button"></button>
-                    </div>
-
-                </article>
-                <article class="elements__element">
-
-                    <img class="elements__image" src="./images/mesto_2.png" alt="гора Эльбрус">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Гора Эльбрус</h2>
-                        <button class="elements__like" type="button"></button>
-                    </div>
-
-                </article>
-                <article class="elements__element">
-
-                    <img class="elements__image" src="./images/mesto_3.png" alt="Домбай">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Домбай</h2>
-                        <button class="elements__like" type="button"></button>
-                    </div>
-
-                </article>
-                <article class="elements__element">
-
-                    <img class="elements__image" src="./images/mesto_2.png" alt="Эльбрус">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Гора Эльбрус</h2>
-                        <button class="elements__like" type="button"></button>
-                    </div>
-
-                </article>
-                <article class="elements__element">
-
-                    <img class="elements__image" src="./images/mesto_3.png" alt="Домбай">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Домбай</h2>
-                        <button class="elements__like" type="button"></button>
-                    </div>
-
-                </article>
-                <article class="elements__element">
-
-                    <img class="elements__image" src="./images/mesto.jpg" alt="Карачаево-Черкессия">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Карачаево-Черкессия</h2>
-                        <button class="elements__like" type="button"></button>
-                    </div>
-
-                </article>
+            <section class="templ">
+                <ul class="elements">
+                </ul>
             </section>
         </main>
         <footer class="footer">
@@ -102,6 +50,16 @@
             </div>
         </div>
     </div>
+    <template id="templ__element">
+        <li class="elements__element">
+            <img class="elements__image" src="#">
+            <button class="elements__delete" type="button"></button>
+            <div class="elements__info">
+                <h2 class="elements__title">Карачаевск</h2>
+                <button class="elements__like" type="button"></button>
+            </div>
+        </li>
+    </template>
     <script src="./scripts/index.js"></script>
 </body>
 
