@@ -76,11 +76,30 @@ const initialCards = [{
 ];
 
 const templateElement = document.querySelector('#templ__element').content;
-initialCards.forEach((count) => {
+
+initialCards.forEach((card) => {
     const templateElementClone = templateElement.querySelector('.elements__element').cloneNode(true);
-    templateElement.querySelector('.elements__title').textContent = count.name;
+
+    templateElement.querySelector('.elements__title').textContent = card.name;
     const img = templateElementClone.querySelector('.elements__image');
-    img.src = count.link;
-    img.alt = `alt ${count.name}`;
+
+
+    const likeBtn = templateElementClone.querySelector('.elements__like');
+    const toggleLikeCard = () => likeBtn.classList.toggle('elements__like-active')
+    likeBtn.addEventListener('click', () => toggleLikeCard())
+
+
+    const deleteBtn = templateElementClone.querySelector('.elements__delete');
+
+    const deleteCurrentCard = (e) => {
+        if (e.target === e.currentTarget) {
+            templateElementClone.remove()
+        }
+    }
+
+    deleteBtn.addEventListener('click', deleteCurrentCard)
+
+    img.src = card.link;
+    img.alt = `alt ${card.name}`;
     ul.append(templateElementClone);
 });
