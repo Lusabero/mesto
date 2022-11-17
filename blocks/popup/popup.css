@@ -4,7 +4,13 @@
     position: fixed;
     top: 0;
     left: 0;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(0, 0, 0, .5);
     z-index: 2;
-    display: none;
+    /* display: none; */
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
 }

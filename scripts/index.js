@@ -1,33 +1,42 @@
-const popupElement = document.querySelector('.popup');
-const popupCloseButtonElement = popupElement.querySelector('.popup__close');
-const popupOpenButtonElement = document.querySelector('.profile__info-button');
-
-
-const openPopup = function() {
-    popupElement.classList.add('popup_is-opened');
-    nameInput.value = nameInfo.textContent;
-    jobInput.value = jobInfo.textContent;
-}
-const closePopup = function() {
-    popupElement.classList.remove('popup_is-opened');
-
-}
-
-
-popupOpenButtonElement.addEventListener('click', openPopup);
-popupCloseButtonElement.addEventListener('click', closePopup);
-
-
-
-
+const popupProfile = document.querySelector('.popup_edit_profile');
+const popupCloseBtn = document.querySelectorAll('.popup__close');
+const editProfileBtn = document.querySelector('.profile__info-button');
+const addCardBtn = document.querySelector('.profile__button-add');
+const popupImage = document.querySelector('.popup_photo');
+const popupNewCard = document.querySelector('.popup__card');
+const cardTitle = popupNewCard.querySelector('.popup__card-title');
+const cardSrc = popupNewCard.querySelector('.popup__card-src');
 // Находим форму в DOM
-let formElement = document.querySelector('.popup__form');
+const formElementProfile = document.querySelector('.popup__form');
+const formElementCard = document.querySelector('.popup__form_card');
 // Находим поля формы в DOM
-let nameInput = formElement.querySelector('#nameInput');
-let jobInput = formElement.querySelector('#jobInput');
+const nameInput = formElementProfile.querySelector('#nameInput');
+const jobInput = formElementProfile.querySelector('#jobInput');
 
 const nameInfo = document.querySelector('#nameInfo');
 const jobInfo = document.querySelector('#jobInfo');
+
+function openPopup(element) {
+    element.classList.add('popup_is-opened');
+}
+
+function closePopup(element) {
+    element.classList.remove('popup_is-opened');
+}
+
+function editProfile() {
+    nameInput.value = nameInfo.textContent;
+    jobInput.value = jobInfo.textContent;
+}
+
+editProfileBtn.addEventListener('click', () => {
+    openPopup(popupProfile);
+    editProfile();
+})
+
+addCardBtn.addEventListener('click', () => {
+    openPopup(popupNewCard);
+})
 
 
 
@@ -38,14 +47,23 @@ function formSubmitHandler(evt) {
 
     nameInfo.textContent = nameInput.value;
     jobInfo.textContent = jobInput.value;
-    closePopup();
-
-
+    closePopup(popupProfile);
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+formElementProfile.addEventListener('submit', formSubmitHandler);
+
+function popupBigImage(evt) {
+    const srcValue = evt.target.src;
+    const caption = evt.target.alt;
+    popupImage.querySelector('.popup__image').src = srcValue;
+    popupImage.querySelector('.popup__image').alt = caption;
+    popupImage.querySelector('.popup__figure_caption').textContent = caption;
+    openPopup(popupImage);
+}
+
+
 
 const ul = document.querySelector('.elements');
 
@@ -78,28 +96,38 @@ const initialCards = [{
 const templateElement = document.querySelector('#templ__element').content;
 
 initialCards.forEach((card) => {
-    const templateElementClone = templateElement.querySelector('.elements__element').cloneNode(true);
+    const templateElementCard = templateElement.querySelector('.elements__element').cloneNode(true);
+    templateElementCard.querySelector('.elements__title').textContent = card.name;
+    const img = templateElementCard.querySelector('.elements__image');
+    img.src = card.link;
+    img.alt = `${card.name}`;
 
-    templateElement.querySelector('.elements__title').textContent = card.name;
-    const img = templateElementClone.querySelector('.elements__image');
 
-
-    const likeBtn = templateElementClone.querySelector('.elements__like');
-    const toggleLikeCard = () => likeBtn.classList.toggle('elements__like-active')
+    const likeBtn = templateElementCard.querySelector('.elements__like');
+    const toggleLikeCard = () => likeBtn.classList.toggle('elements__like-active');
     likeBtn.addEventListener('click', () => toggleLikeCard())
 
 
-    const deleteBtn = templateElementClone.querySelector('.elements__delete');
+    const deleteBtn = templateElementCard.querySelector('.elements__delete');
 
     const deleteCurrentCard = (e) => {
         if (e.target === e.currentTarget) {
-            templateElementClone.remove()
+            templateElementCard.remove()
         }
     }
 
     deleteBtn.addEventListener('click', deleteCurrentCard)
 
-    img.src = card.link;
-    img.alt = `alt ${card.name}`;
-    ul.append(templateElementClone);
+
+    ul.append(templateElementCard);
+    img.addEventListener('click', popupBigImage);
+    return templateElement;
+
+
+});
+popupCloseBtn.forEach((button) => {
+    button.addEventListener('click', (evt) => {
+        const popup = evt.target.closest('.popup');
+        closePopup(popup);
+    });
 });
