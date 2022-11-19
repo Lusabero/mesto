@@ -15,6 +15,7 @@ const jobInput = formElementProfile.querySelector('#jobInput');
 
 const nameInfo = document.querySelector('#nameInfo');
 const jobInfo = document.querySelector('#jobInfo');
+const cardsList = document.querySelector('.elements');
 
 function openPopup(element) {
     element.classList.add('popup_is-opened');
@@ -34,8 +35,23 @@ editProfileBtn.addEventListener('click', () => {
     editProfile();
 })
 
+function submitCardForm(event) {
+    event.preventDefault();
+
+    const card = {
+        name: cardTitle.value,
+        link: cardSrc.value
+    }
+    createCard(card)
+    closePopup(popupNewCard)
+
+    cardTitle.value = '';
+    cardSrc.value = '';
+}
+
 addCardBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
+
 })
 
 
@@ -95,36 +111,60 @@ const initialCards = [{
 
 const templateElement = document.querySelector('#templ__element').content;
 
-initialCards.forEach((card) => {
+
+function createCard(card) {
     const templateElementCard = templateElement.querySelector('.elements__element').cloneNode(true);
-    templateElementCard.querySelector('.elements__title').textContent = card.name;
-    const img = templateElementCard.querySelector('.elements__image');
-    img.src = card.link;
-    img.alt = `${card.name}`;
-
-
+    const title = templateElementCard.querySelector('.elements__title');
     const likeBtn = templateElementCard.querySelector('.elements__like');
-    const toggleLikeCard = () => likeBtn.classList.toggle('elements__like-active');
-    likeBtn.addEventListener('click', () => toggleLikeCard())
-
-
     const deleteBtn = templateElementCard.querySelector('.elements__delete');
+    const img = templateElementCard.querySelector('.elements__image');
 
-    const deleteCurrentCard = (e) => {
-        if (e.target === e.currentTarget) {
-            templateElementCard.remove()
-        }
-    }
+    title.textContent = card.name;
+    img.src = card.link;
+    img.alt = card.name;
 
+    likeBtn.addEventListener('click', toggleLikeCard)
     deleteBtn.addEventListener('click', deleteCurrentCard)
-
-
-    ul.append(templateElementCard);
     img.addEventListener('click', popupBigImage);
-    return templateElement;
+
+    renderCard(templateElementCard)
+}
+
+function renderCard(card) {
+    cardsList.prepend(card);
+}
+
+function toggleLikeCard(event) {
+    event.target.classList.toggle('elements__like-active');
+}
+
+function deleteCurrentCard(event) {
+    event.currentTarget.closest('.elements__element').remove()
+}
 
 
+function formSubmitCard(event) {
+    event.preventDefault();
+
+    const card = {
+        name: cardTitle.value,
+        link: cardSrc.value
+    }
+    createCard(card)
+    closePopup(popupNewCard)
+
+    cardTitle.value = '';
+    cardSrc.value = '';
+}
+addCardBtn.addEventListener('click', () => {
+    openPopup(popupNewCard);
+})
+
+formElementCard.addEventListener('submit', formSubmitCard);
+initialCards.forEach((card) => {
+    createCard(card)
 });
+
 popupCloseBtn.forEach((button) => {
     button.addEventListener('click', (evt) => {
         const popup = evt.target.closest('.popup');
