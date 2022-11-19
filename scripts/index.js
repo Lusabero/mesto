@@ -3,7 +3,7 @@ const popupCloseBtn = document.querySelectorAll('.popup__close');
 const editProfileBtn = document.querySelector('.profile__info-button');
 const addCardBtn = document.querySelector('.profile__button-add');
 const popupImage = document.querySelector('.popup_photo');
-const popupNewCard = document.querySelector('.popup__card');
+const popupNewCard = document.querySelector('.popup-card');
 const cardTitle = popupNewCard.querySelector('.popup__card-title');
 const cardSrc = popupNewCard.querySelector('.popup__card-src');
 // Находим форму в DOM
@@ -75,7 +75,7 @@ function popupBigImage(evt) {
     const caption = evt.target.alt;
     popupImage.querySelector('.popup__image').src = srcValue;
     popupImage.querySelector('.popup__image').alt = caption;
-    popupImage.querySelector('.popup__figure_caption').textContent = caption;
+    popupImage.querySelector('.popup__figure-caption').textContent = caption;
     openPopup(popupImage);
 }
 
