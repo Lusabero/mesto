@@ -1,8 +1,10 @@
 const popupProfile = document.querySelector('.popup_edit_profile');
-const popupCloseBtn = document.querySelectorAll('.popup__close');
+const popupCloseBtns = document.querySelectorAll('.popup__close');
 const editProfileBtn = document.querySelector('.profile__info-button');
 const addCardBtn = document.querySelector('.profile__button-add');
 const popupImage = document.querySelector('.popup_photo');
+const srcValue = popupImage.querySelector('.popup__image').src;
+const caption = popupImage.querySelector('.popup__figure-caption').textContent;
 const popupNewCard = document.querySelector('.popup-card');
 const cardTitle = popupNewCard.querySelector('.popup__card-title');
 const cardSrc = popupNewCard.querySelector('.popup__card-src');
@@ -35,19 +37,6 @@ editProfileBtn.addEventListener('click', () => {
     editProfile();
 })
 
-function submitCardForm(event) {
-    event.preventDefault();
-
-    const card = {
-        name: cardTitle.value,
-        link: cardSrc.value
-    }
-    createCard(card)
-    closePopup(popupNewCard)
-
-    cardTitle.value = '';
-    cardSrc.value = '';
-}
 
 addCardBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
@@ -58,7 +47,7 @@ addCardBtn.addEventListener('click', () => {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function formSubmitHandler(evt) {
+function handlerProfiltFormSubmit(evt) {
     evt.preventDefault();
 
     nameInfo.textContent = nameInput.value;
@@ -68,14 +57,11 @@ function formSubmitHandler(evt) {
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElementProfile.addEventListener('submit', formSubmitHandler);
+formElementProfile.addEventListener('submit', handlerProfiltFormSubmit);
 
-function popupBigImage(evt) {
-    const srcValue = evt.target.src;
-    const caption = evt.target.alt;
-    popupImage.querySelector('.popup__image').src = srcValue;
-    popupImage.querySelector('.popup__image').alt = caption;
-    popupImage.querySelector('.popup__figure-caption').textContent = caption;
+function openPopupImage(evt) {
+    srcValue = evt.target.src;
+    caption = evt.target.alt;
     openPopup(popupImage);
 }
 
@@ -125,9 +111,12 @@ function createCard(card) {
 
     likeBtn.addEventListener('click', toggleLikeCard)
     deleteBtn.addEventListener('click', deleteCurrentCard)
-    img.addEventListener('click', popupBigImage);
+    img.addEventListener('click', openPopupImage);
 
-    renderCard(templateElementCard)
+    const cardItems = renderCard(templateElementCard);
+
+    return cardItems;
+
 }
 
 function renderCard(card) {
@@ -143,7 +132,7 @@ function deleteCurrentCard(event) {
 }
 
 
-function formSubmitCard(event) {
+function hanlerCardFormSubmit(event) {
     event.preventDefault();
 
     const card = {
@@ -160,12 +149,12 @@ addCardBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
 })
 
-formElementCard.addEventListener('submit', formSubmitCard);
+formElementCard.addEventListener('submit', hanlerCardFormSubmit);
 initialCards.forEach((card) => {
     createCard(card)
 });
 
-popupCloseBtn.forEach((button) => {
+popupCloseBtns.forEach((button) => {
     button.addEventListener('click', (evt) => {
         const popup = evt.target.closest('.popup');
         closePopup(popup);
