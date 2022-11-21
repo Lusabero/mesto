@@ -3,8 +3,8 @@ const popupCloseBtns = document.querySelectorAll('.popup__close');
 const editProfileBtn = document.querySelector('.profile__info-button');
 const addCardBtn = document.querySelector('.profile__button-add');
 const popupImage = document.querySelector('.popup_photo');
-const srcValue = popupImage.querySelector('.popup__image').src;
-const caption = popupImage.querySelector('.popup__figure-caption').textContent;
+const popupBigImage = popupImage.querySelector('.popup__image');
+const caption = popupImage.querySelector('.popup__figure-caption');
 const popupNewCard = document.querySelector('.popup-card');
 const cardTitle = popupNewCard.querySelector('.popup__card-title');
 const cardSrc = popupNewCard.querySelector('.popup__card-src');
@@ -60,14 +60,14 @@ function handlerProfiltFormSubmit(evt) {
 formElementProfile.addEventListener('submit', handlerProfiltFormSubmit);
 
 function openPopupImage(evt) {
-    srcValue = evt.target.src;
-    caption = evt.target.alt;
+    popupBigImage.src = evt.target.src;
+    caption.textContent = evt.target.alt;
     openPopup(popupImage);
 }
 
 
 
-const ul = document.querySelector('.elements');
+// const ul = document.querySelector('.elements');
 
 const initialCards = [{
         name: 'Архыз',
@@ -98,61 +98,48 @@ const initialCards = [{
 const templateElement = document.querySelector('#templ__element').content;
 
 
-function createCard(card) {
+function createCard(srcValue, titleValue) {
     const templateElementCard = templateElement.querySelector('.elements__element').cloneNode(true);
-    const title = templateElementCard.querySelector('.elements__title');
-    const likeBtn = templateElementCard.querySelector('.elements__like');
-    const deleteBtn = templateElementCard.querySelector('.elements__delete');
-    const img = templateElementCard.querySelector('.elements__image');
-
-    title.textContent = card.name;
-    img.src = card.link;
-    img.alt = card.name;
-
-    likeBtn.addEventListener('click', toggleLikeCard)
-    deleteBtn.addEventListener('click', deleteCurrentCard)
-    img.addEventListener('click', openPopupImage);
-
-    const cardItems = renderCard(templateElementCard);
-
-    return cardItems;
-
+    const cardImage = templateElementCard.querySelector('.elements__image');
+    cardImage.src = srcValue;
+    cardImage.alt = titleValue;
+    templateElementCard.querySelector('.elements__title').textContent = titleValue;
+    templateElementCard.querySelector('.elements__like').addEventListener('click', function(evt) {
+        evt.target.classList.toggle('elements__like-active');
+    });
+    templateElementCard.querySelector('.elements__delete').addEventListener('click', (evt) => {
+        const card = evt.target.closest('.elements__element');
+        card.remove();
+    });
+    cardImage.addEventListener('click', openPopupImage);
+    return templateElementCard;
 }
 
 function renderCard(card) {
     cardsList.prepend(card);
 }
 
-function toggleLikeCard(event) {
-    event.target.classList.toggle('elements__like-active');
+
+
+function hanlerCardFormSubmit(evt) {
+    evt.preventDefault();
+    srcInput = cardSrc.value;
+    placeInput = cardTitle.value;
+    const card = createCard(srcInput, placeInput);
+    renderCard(card);
+    closePopup(popupNewCard);
+    evt.target.reset();
 }
 
-function deleteCurrentCard(event) {
-    event.currentTarget.closest('.elements__element').remove()
-}
-
-
-function hanlerCardFormSubmit(event) {
-    event.preventDefault();
-
-    const card = {
-        name: cardTitle.value,
-        link: cardSrc.value
-    }
-    createCard(card)
-    closePopup(popupNewCard)
-
-    cardTitle.value = '';
-    cardSrc.value = '';
-}
 addCardBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
 })
 
 formElementCard.addEventListener('submit', hanlerCardFormSubmit);
-initialCards.forEach((card) => {
-    createCard(card)
-});
+initialCards.forEach((element) => {
+    const card = createCard(element.link, element.name);
+    renderCard(card);
+})
 
 popupCloseBtns.forEach((button) => {
     button.addEventListener('click', (evt) => {
