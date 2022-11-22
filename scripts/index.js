@@ -21,11 +21,26 @@ const cardsList = document.querySelector('.elements');
 
 function openPopup(element) {
     element.classList.add('popup_is-opened');
+    document.addEventListener('keydown', (evt) => closePopupKeyEsc(element, evt));
 }
 
 function closePopup(element) {
     element.classList.remove('popup_is-opened');
+    document.removeEventListener('keydown', closePopupKeyEsc);
 }
+
+
+function closePopupKeyEsc(element, evt) {
+    if (evt.key === 'Escape') {
+        closePopup(element);
+    }
+};
+
+function closePopupOverlay(evt) {
+    if (evt.target === evt.currentTarget) {
+        closePopup(evt.currentTarget);
+    }
+};
 
 function editProfile() {
     nameInput.value = nameInfo.textContent;
@@ -147,3 +162,6 @@ popupCloseBtns.forEach((button) => {
         closePopup(popup);
     });
 });
+popupImage.addEventListener('click', closePopupOverlay);
+popupProfile.addEventListener('click', closePopupOverlay);
+popupNewCard.addEventListener('click', closePopupOverlay);
