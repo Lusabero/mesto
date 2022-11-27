@@ -28,3 +28,14 @@
     opacity: 0.8;
     cursor: pointer;
 }
+
+.popup__button:disabled {
+    padding: 13px 123px 17px 124px;
+    color: #000000;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    background-color: transparent;
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
+}

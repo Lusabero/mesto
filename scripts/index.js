@@ -6,14 +6,15 @@ const popupImage = document.querySelector('.popup_photo');
 const popupBigImage = popupImage.querySelector('.popup__image');
 const caption = popupImage.querySelector('.popup__figure-caption');
 const popupNewCard = document.querySelector('.popup-card');
-const cardTitle = popupNewCard.querySelector('.popup__card-title');
-const cardSrc = popupNewCard.querySelector('.popup__card-src');
+const cardTitleInput = popupNewCard.querySelector('.popup__card-title');
+const cardSrcInput = popupNewCard.querySelector('.popup__card-src');
 // Находим форму в DOM
 const formElementProfile = document.querySelector('.popup__form');
 const formElementCard = document.querySelector('.popup__form_card');
 // Находим поля формы в DOM
-const nameInput = formElementProfile.querySelector('#nameInput');
-const jobInput = formElementProfile.querySelector('#jobInput');
+const nameInput = formElementProfile.querySelector('[name="nameInput"]');
+const jobInput = formElementProfile.querySelector('[name="jobInput"]');
+
 
 const nameInfo = document.querySelector('#nameInfo');
 const jobInfo = document.querySelector('#jobInfo');
@@ -25,6 +26,17 @@ function openPopup(element) {
 }
 
 function closePopup(element) {
+    const form = element.querySelector('.popup__form');
+    if (form !== null) {
+        form.reset();
+        toggleButton(form, obj);
+        const errorMessage = element.querySelectorAll('.error');
+        errorMessage.forEach((message) => {
+            message.textContent = '';
+        })
+        console.log(errorMessage);
+    }
+
     element.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', closePopupKeyEsc);
 }
@@ -136,11 +148,9 @@ function renderCard(card) {
 
 
 
-function hanlerCardFormSubmit(evt) {
+function handleCardFormSubmit(evt) {
     evt.preventDefault();
-    srcInput = cardSrc.value;
-    placeInput = cardTitle.value;
-    const card = createCard(srcInput, placeInput);
+    const card = createCard(cardSrcInput.value, cardTitleInput.value);
     renderCard(card);
     closePopup(popupNewCard);
     evt.target.reset();
@@ -150,7 +160,7 @@ addCardBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
 })
 
-formElementCard.addEventListener('submit', hanlerCardFormSubmit);
+formElementCard.addEventListener('submit', handleCardFormSubmit);
 initialCards.forEach((element) => {
     const card = createCard(element.link, element.name);
     renderCard(card);

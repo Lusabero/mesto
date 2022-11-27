@@ -2,8 +2,6 @@
     display: flex;
     width: 358px;
     flex-direction: column;
-    /* width: 100%; */
-    margin-bottom: 30px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
     font-family: 'Inter', Arial, sans-serif;
@@ -12,11 +10,16 @@
     font-size: 14px;
     line-height: 17px;
     color: #000000;
-    padding-bottom: 13px;
+    padding: 0 0 13px;
+    height: 14px;
 }
 
 @media (max-width: 770px) {
     .popup__input {
         width: 238px;
     }
+}
+
+.popup__input::placeholder {
+    color: #C4C4C4;
 }
