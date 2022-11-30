@@ -4,7 +4,7 @@ const obj = {
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
+    errorClass: '.error'
 }
 
 
@@ -13,31 +13,29 @@ enableValidation(obj);
 function enableValidation(obj) {
     const forms = Array.from(document.querySelectorAll(obj.formSelector));
     forms.forEach(form => addListenersToForm(form, obj));
-    // console.log(forms);
+
 }
 
 
 function addListenersToForm(form, obj) {
     const inputs = Array.from(form.querySelectorAll(obj.inputSelector));
     inputs.forEach(input => addListenersToInput(input, obj));
-
-    form.addEventListener('input', (evt) => handleFormInput(evt, obj));
-    toggleButton(form, obj);
-    // console.log(inputs);
-}
-
-function handleFormInput(evt, obj) {
-    toggleButton(evt.currentTarget, obj);
-}
-
-function toggleButton(form, obj) {
     const button = form.querySelector(obj.submitButtonSelector);
+    form.addEventListener('input', (evt) => handleFormInput(evt, obj, button));
+    toggleButton(form, obj, button);
+
+}
+
+function handleFormInput(evt, obj, button) {
+    toggleButton(evt.currentTarget, obj, button);
+}
+
+function toggleButton(form, obj, button) {
     const isFormInvalid = !form.checkValidity();
 
     button.disabled = isFormInvalid;
     button.classList.toggle(obj.inactiveButtonClass, isFormInvalid);
-    // console.log(button);
-    // console.log(isFormInvalid);
+
 }
 
 
@@ -51,8 +49,18 @@ function handleFieldValidation(evt, obj) {
     element.classList.toggle(
         obj.inputErrorClass, !element.validity.valid
     );
-    // console.log(element);
-    console.log(errorContainer);
-
     errorContainer.textContent = element.validationMessage;
+}
+
+function clearForm(popup, obj) {
+    const form = popup.querySelector(obj.formSelector);
+    if (form !== null) {
+        const button = form.querySelector(obj.submitButtonSelector);
+        const errors = Array.from(form.querySelectorAll(obj.errorClass));
+        errors.forEach((error) => {
+            error.textContent = '';
+        })
+        form.reset();
+        toggleButton(form, obj, button);
+    }
 }

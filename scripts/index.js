@@ -1,7 +1,7 @@
 const popupProfile = document.querySelector('.popup_edit_profile');
 const popupCloseBtns = document.querySelectorAll('.popup__close');
-const editProfileBtn = document.querySelector('.profile__info-button');
-const addCardBtn = document.querySelector('.profile__button-add');
+const profileEditBtn = document.querySelector('.profile__info-button');
+const cardAddBtn = document.querySelector('.profile__button-add');
 const popupImage = document.querySelector('.popup_photo');
 const popupBigImage = popupImage.querySelector('.popup__image');
 const caption = popupImage.querySelector('.popup__figure-caption');
@@ -9,42 +9,31 @@ const popupNewCard = document.querySelector('.popup-card');
 const cardTitleInput = popupNewCard.querySelector('.popup__card-title');
 const cardSrcInput = popupNewCard.querySelector('.popup__card-src');
 // Находим форму в DOM
-const formElementProfile = document.querySelector('.popup__form');
-const formElementCard = document.querySelector('.popup__form_card');
+const formElementProfile = popupProfile.querySelector('.popup__form');
+const formElementCard = popupNewCard.querySelector('.popup__form');
 // Находим поля формы в DOM
 const nameInput = formElementProfile.querySelector('[name="nameInput"]');
 const jobInput = formElementProfile.querySelector('[name="jobInput"]');
-
-
 const nameInfo = document.querySelector('#nameInfo');
 const jobInfo = document.querySelector('#jobInfo');
 const cardsList = document.querySelector('.elements');
 
 function openPopup(element) {
     element.classList.add('popup_is-opened');
-    document.addEventListener('keydown', (evt) => closePopupKeyEsc(element, evt));
+    document.addEventListener('keydown', closePopupKeyEsc);
 }
 
 function closePopup(element) {
-    const form = element.querySelector('.popup__form');
-    if (form !== null) {
-        form.reset();
-        toggleButton(form, obj);
-        const errorMessage = element.querySelectorAll('.error');
-        errorMessage.forEach((message) => {
-            message.textContent = '';
-        })
-        console.log(errorMessage);
-    }
-
+    clearForm(element, obj)
     element.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', closePopupKeyEsc);
 }
 
 
-function closePopupKeyEsc(element, evt) {
+function closePopupKeyEsc(evt) {
     if (evt.key === 'Escape') {
-        closePopup(element);
+        const openedPopup = document.querySelector('.popup_is-opened')
+        closePopup(openedPopup);
     }
 };
 
@@ -59,22 +48,20 @@ function editProfile() {
     jobInput.value = jobInfo.textContent;
 }
 
-editProfileBtn.addEventListener('click', () => {
+profileEditBtn.addEventListener('click', () => {
     openPopup(popupProfile);
     editProfile();
 })
 
 
-addCardBtn.addEventListener('click', () => {
+cardAddBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
 
 })
 
-
-
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function handlerProfiltFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault();
 
     nameInfo.textContent = nameInput.value;
@@ -84,17 +71,15 @@ function handlerProfiltFormSubmit(evt) {
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElementProfile.addEventListener('submit', handlerProfiltFormSubmit);
+formElementProfile.addEventListener('submit', handleProfileFormSubmit);
 
 function openPopupImage(evt) {
     popupBigImage.src = evt.target.src;
     caption.textContent = evt.target.alt;
+    popupBigImage.alt = evt.target.alt;
+
     openPopup(popupImage);
 }
-
-
-
-// const ul = document.querySelector('.elements');
 
 const initialCards = [{
         name: 'Архыз',
@@ -146,8 +131,6 @@ function renderCard(card) {
     cardsList.prepend(card);
 }
 
-
-
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
     const card = createCard(cardSrcInput.value, cardTitleInput.value);
@@ -156,7 +139,7 @@ function handleCardFormSubmit(evt) {
     evt.target.reset();
 }
 
-addCardBtn.addEventListener('click', () => {
+cardAddBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
 })
 
