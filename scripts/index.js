@@ -2,7 +2,7 @@ const popupProfile = document.querySelector('.popup_edit_profile');
 const popupCloseBtns = document.querySelectorAll('.popup__close');
 const profileEditBtn = document.querySelector('.profile__info-button');
 const cardAddBtn = document.querySelector('.profile__button-add');
-const popupImage = document.querySelector('.popup_photo');
+const popupImage = document.querySelector('.popup__photo');
 const popupBigImage = popupImage.querySelector('.popup__image');
 const caption = popupImage.querySelector('.popup__figure-caption');
 const popupNewCard = document.querySelector('.popup-card');
@@ -24,7 +24,6 @@ function openPopup(element) {
 }
 
 function closePopup(element) {
-    clearForm(element, obj)
     element.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', closePopupKeyEsc);
 }
@@ -35,13 +34,13 @@ function closePopupKeyEsc(evt) {
         const openedPopup = document.querySelector('.popup_is-opened')
         closePopup(openedPopup);
     }
-};
+}
 
 function closePopupOverlay(evt) {
     if (evt.target === evt.currentTarget) {
         closePopup(evt.currentTarget);
     }
-};
+}
 
 function editProfile() {
     nameInput.value = nameInfo.textContent;
@@ -56,7 +55,6 @@ profileEditBtn.addEventListener('click', () => {
 
 cardAddBtn.addEventListener('click', () => {
     openPopup(popupNewCard);
-
 })
 
 // Обработчик «отправки» формы, хотя пока
@@ -67,6 +65,8 @@ function handleProfileFormSubmit(evt) {
     nameInfo.textContent = nameInput.value;
     jobInfo.textContent = jobInput.value;
     closePopup(popupProfile);
+    evt.target.reset();
+    clearFormErrors(evt.target, obj)
 }
 
 // Прикрепляем обработчик к форме:
@@ -137,6 +137,7 @@ function handleCardFormSubmit(evt) {
     renderCard(card);
     closePopup(popupNewCard);
     evt.target.reset();
+    clearFormErrors(evt.target, obj)
 }
 
 cardAddBtn.addEventListener('click', () => {

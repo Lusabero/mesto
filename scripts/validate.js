@@ -52,15 +52,11 @@ function handleFieldValidation(evt, obj) {
     errorContainer.textContent = element.validationMessage;
 }
 
-function clearForm(popup, obj) {
-    const form = popup.querySelector(obj.formSelector);
-    if (form !== null) {
-        const button = form.querySelector(obj.submitButtonSelector);
-        const errors = Array.from(form.querySelectorAll(obj.errorClass));
-        errors.forEach((error) => {
-            error.textContent = '';
-        })
-        form.reset();
-        toggleButton(form, obj, button);
-    }
+function clearFormErrors(form, obj) {
+    const button = form.querySelector(obj.submitButtonSelector);
+    const errors = Array.from(form.querySelectorAll(obj.errorClass));
+    errors.forEach((error) => {
+        error.textContent = '';
+    })
+    toggleButton(form, obj, button);
 }

@@ -29,7 +29,8 @@
     cursor: pointer;
 }
 
-.popup__button:disabled {
+
+/* .popup__button:disabled {
     padding: 13px 123px 17px 124px;
     color: #000000;
     border: 1px solid #000000;
@@ -38,4 +39,4 @@
     cursor: default;
     user-select: none;
     pointer-events: none;
-}
+} */
