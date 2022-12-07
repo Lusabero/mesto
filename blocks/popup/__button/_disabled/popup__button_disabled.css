@@ -4,4 +4,9 @@
     color: #000000;
     border: 1px solid #000000;
     border-radius: 2px;
+    cursor: unset;
+}
+
+.popup__button_disabled:hover {
+    opacity: .2;
 }

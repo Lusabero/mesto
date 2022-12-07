@@ -2,7 +2,7 @@ const popupProfile = document.querySelector('.popup_edit_profile');
 const popupCloseBtns = document.querySelectorAll('.popup__close');
 const profileEditBtn = document.querySelector('.profile__info-button');
 const cardAddBtn = document.querySelector('.profile__button-add');
-const popupImage = document.querySelector('.popup-photo');
+const popupImage = document.querySelector('.popup__photo');
 const popupBigImage = popupImage.querySelector('.popup__image');
 const caption = popupImage.querySelector('.popup__figure-caption');
 const popupNewCard = document.querySelector('.popup-card');
@@ -17,6 +17,32 @@ const jobInput = formElementProfile.querySelector('[name="jobInput"]');
 const nameInfo = document.querySelector('#nameInfo');
 const jobInfo = document.querySelector('#jobInfo');
 const cardsList = document.querySelector('.elements');
+const templateElement = document.querySelector('#templ__element').content;
+const initialCards = [{
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
 
 function openPopup(element) {
     element.classList.add('popup_is-opened');
@@ -47,16 +73,6 @@ function editProfile() {
     jobInput.value = jobInfo.textContent;
 }
 
-profileEditBtn.addEventListener('click', () => {
-    openPopup(popupProfile);
-    editProfile();
-})
-
-
-cardAddBtn.addEventListener('click', () => {
-    openPopup(popupNewCard);
-})
-
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt) {
@@ -65,13 +81,7 @@ function handleProfileFormSubmit(evt) {
     nameInfo.textContent = nameInput.value;
     jobInfo.textContent = jobInput.value;
     closePopup(popupProfile);
-    evt.target.reset();
-    clearFormErrors(evt.target, obj)
 }
-
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formElementProfile.addEventListener('submit', handleProfileFormSubmit);
 
 function openPopupImage(evt) {
     popupBigImage.src = evt.target.src;
@@ -80,35 +90,6 @@ function openPopupImage(evt) {
 
     openPopup(popupImage);
 }
-
-const initialCards = [{
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
-const templateElement = document.querySelector('#templ__element').content;
-
 
 function createCard(srcValue, titleValue) {
     const templateElementCard = templateElement.querySelector('.elements__element').cloneNode(true);
@@ -136,19 +117,31 @@ function handleCardFormSubmit(evt) {
     const card = createCard(cardSrcInput.value, cardTitleInput.value);
     renderCard(card);
     closePopup(popupNewCard);
-    evt.target.reset();
-    clearFormErrors(evt.target, obj)
 }
 
-cardAddBtn.addEventListener('click', () => {
-    openPopup(popupNewCard);
-})
-
-formElementCard.addEventListener('submit', handleCardFormSubmit);
 initialCards.forEach((element) => {
     const card = createCard(element.link, element.name);
     renderCard(card);
 })
+
+profileEditBtn.addEventListener('click', () => {
+    formElementProfile.reset()
+    clearFormErrors(formElementProfile)
+    openPopup(popupProfile);
+    editProfile();
+})
+
+cardAddBtn.addEventListener('click', () => {
+    formElementCard.reset()
+    clearFormErrors(formElementCard)
+    openPopup(popupNewCard);
+})
+
+// Прикрепляем обработчик к форме:
+// он будет следить за событием “submit” - «отправка»
+formElementProfile.addEventListener('submit', handleProfileFormSubmit);
+
+formElementCard.addEventListener('submit', handleCardFormSubmit);
 
 popupCloseBtns.forEach((button) => {
     button.addEventListener('click', (evt) => {

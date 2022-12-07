@@ -4,7 +4,7 @@ const obj = {
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: '.error'
+    errorClass: 'popup__error_visible'
 }
 
 
@@ -44,19 +44,37 @@ function addListenersToInput(input, obj) {
 }
 
 function handleFieldValidation(evt, obj) {
-    const element = evt.target;
-    const errorContainer = document.querySelector(`#${element.id}-error`);
-    element.classList.toggle(
-        obj.inputErrorClass, !element.validity.valid
-    );
-    errorContainer.textContent = element.validationMessage;
+    const formElement = evt.target.closest(obj.formSelector)
+    isValid(formElement, evt.target)
 }
 
-function clearFormErrors(form, obj) {
-    const button = form.querySelector(obj.submitButtonSelector);
-    const errors = Array.from(form.querySelectorAll(obj.errorClass));
-    errors.forEach((error) => {
-        error.textContent = '';
+function clearFormErrors(form) {
+    const button = form.querySelector('.popup__button');
+    const inputElements = Array.from(form.querySelectorAll(obj.inputSelector));
+    inputElements.forEach((input) => {
+        hideInputError(form, input)
     })
     toggleButton(form, obj, button);
+}
+
+function isValid(formElement, inputElement) {
+    if (!inputElement.validity.valid) {
+        showInputError(formElement, inputElement, inputElement.validationMessage)
+    } else {
+        hideInputError(formElement, inputElement)
+    }
+}
+
+function showInputError(formElement, inputElement, errorMessage) {
+    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.add(obj.inputErrorClass)
+    errorElement.textContent = errorMessage
+    errorElement.classList.add(obj.errorClass)
+}
+
+function hideInputError(formElement, inputElement) {
+    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.remove(obj.inputErrorClass)
+    errorElement.textContent = ''
+    errorElement.classList.remove(obj.errorClass)
 }

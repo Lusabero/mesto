@@ -51,7 +51,7 @@
                 <button type="button" class="popup__close"></button>
             </div>
         </section>
-        <section class="popup popup-photo popup_opacity">
+        <section class="popup popup-photo popup-opacity">
             <figure class="popup__figure">
                 <img class="popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Архыз">
                 <figcaption class="popup__figure-caption"></figcaption>
@@ -59,14 +59,13 @@
             </figure>
         </section>
     </div>
-
     <section class="popup popup-card">
         <div class="popup__container">
             <h2 class="popup__title">Новое место</h2>
             <form class="popup__form" name="popupCard" novalidate>
-                <input id="card-title" class="popup__input popup__card-title" type="text" name="nameCardTitle" value="" placeholder="название места" minlength="2" maxlength="30" required>
+                <input id="card-title" class="popup__input popup__card-title" type="text" name="nameCardTitle" value="" placeholder="Название" minlength="2" maxlength="30" required>
                 <span class="error" id="card-title-error"></span>
-                <input id="card-src" class="popup__input popup__card-src" type="url" name="popupCardSrc" value="" placeholder="ссылка на новую картинку" required>
+                <input id="card-src" class="popup__input popup__card-src" type="url" name="popupCardSrc" value="" placeholder="Ссылка на картинку" required>
                 <span class="error" id="card-src-error"></span>
                 <button class="popup__button" type="submit">Создать</button>
             </form>
