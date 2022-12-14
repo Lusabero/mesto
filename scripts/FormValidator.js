@@ -26,16 +26,18 @@ export class FormValidator {
         this._button.classList.toggle(this._inactiveButtonClass, this._isFormInvalid);
     }
 
-    _addListenersToInput(input) {
-        input.addEventListener("input", (evt) => this._handleFieldValidation(evt));
-    }
-    enableValidation = () => {
-        this._inputs.forEach((input) => this._addListenersToInput(input));
+    _addEventListeners() {
+        this._inputs.forEach((input) => {
+            input.addEventListener("input", (evt) => this._handleFieldValidation(evt));
+        });
         this._form.addEventListener("input", () => this._toggleButton());
+    }
+
+    enableValidation = () => {
+        this._addEventListeners();
         this._toggleButton();
     };
     resetValidation() {
-        this._form.reset();
         this._toggleButton();
         this._inputs.forEach((input) => {
             input.classList.remove(this._inputErrorClass);

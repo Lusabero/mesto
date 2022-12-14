@@ -94,8 +94,12 @@ function handleProfileFormSubmit(evt) {
     closePopup(popupProfile);
 }
 
+function createCard(item) {
+    return new Card(item, templateElement).createCard()
+}
+
 function renderCard(item) {
-    const card = new Card(item, templateElement).createCard();
+    const card = createCard(item)
     cardsList.prepend(card);
 }
 
@@ -111,12 +115,14 @@ initialCards.forEach((element) => {
 })
 
 profileEditBtn.addEventListener('click', () => {
+    formElementProfile.reset()
     formProfileValidator.resetValidation();
     editProfile();
     openPopup(popupProfile);
 })
 
 cardAddBtn.addEventListener('click', () => {
+    formElementCard.reset()
     formCardValidator.resetValidation();
     openPopup(popupNewCard);
 })
