@@ -1,0 +1,26 @@
+.profile__info-button {
+    grid-area: button;
+    align-self: center;
+    background-color: transparent;
+    background-image: url(../../../images/profil_edit.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #FFFFFF;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 770px) {
+    .profile__info-button {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.profile__info-button:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}

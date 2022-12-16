@@ -1,0 +1,19 @@
+.profile__info {
+    justify-content: space-around;
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content, max-content));
+    grid-template-rows: repeat(2, minmax(min-content, max-content));
+    grid-template-areas: "title button" "subtitle subtitle";
+    grid-column-gap: 18px;
+    margin-left: 30px;
+    position: relative;
+}
+
+@media (max-width: 770px) {
+    .profile__info {
+        max-width: 320px;
+        margin: 0;
+        grid-column-gap: 10px;
+    }
+}
