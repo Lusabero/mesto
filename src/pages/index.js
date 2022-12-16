@@ -9,7 +9,7 @@ import { UserInfo } from "../components/UserInfo";
 const popupProfile = document.querySelector('.popup_edit_profile');
 const profileEditBtn = document.querySelector('.profile__info-button');
 const cardAddBtn = document.querySelector('.profile__button-add');
-const popupImage = document.querySelector('.popup__photo');
+const popupImage = document.querySelector('.popup-photo');
 const popupImageCaption = popupImage.querySelector('.popup__figure-caption')
 const popupNewCard = document.querySelector('.popup-card');
 const formElementProfile = popupProfile.querySelector('.popup__form');
@@ -54,7 +54,7 @@ const obj = {
 
 const formProfileValidator = new FormValidator(obj, formElementProfile);
 const formCardValidator = new FormValidator(obj, formElementCard);
-const popupBigImage = new PopupWithImage(popupImage, popupImageCaption, '.popup__photo');
+const popupBigImage = new PopupWithImage(popupImage, popupImageCaption, '.popup-photo');
 
 function handleCardClick(name, link) {
     popupBigImage.open(name, link);
