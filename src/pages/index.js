@@ -52,7 +52,7 @@ const validationConfig = {
 
 const formProfileValidator = new FormValidator(validationConfig, formElementProfile);
 const formCardValidator = new FormValidator(validationConfig, formElementCard);
-const popupBigImage = new PopupWithImage('.popup__photo');
+const popupBigImage = new PopupWithImage('.popup-photo');
 
 function handleCardClick(name, link) {
     popupBigImage.open(name, link);
