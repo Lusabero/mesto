@@ -9,8 +9,6 @@ import { UserInfo } from "../components/UserInfo";
 const popupProfile = document.querySelector('.popup_edit_profile');
 const profileEditBtn = document.querySelector('.profile__info-button');
 const cardAddBtn = document.querySelector('.profile__button-add');
-const popupImage = document.querySelector('.popup__photo');
-const popupImageCaption = popupImage.querySelector('.popup__figure-caption')
 const popupNewCard = document.querySelector('.popup-card');
 const formElementProfile = popupProfile.querySelector('.popup__form');
 const formElementCard = popupNewCard.querySelector('.popup__form');
@@ -43,7 +41,7 @@ const initialCards = [{
     }
 ];
 
-const obj = {
+const validationConfig = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
@@ -52,9 +50,9 @@ const obj = {
     errorClass: '.popup__error'
 }
 
-const formProfileValidator = new FormValidator(obj, formElementProfile);
-const formCardValidator = new FormValidator(obj, formElementCard);
-const popupBigImage = new PopupWithImage(popupImage, popupImageCaption, '.popup__photo');
+const formProfileValidator = new FormValidator(validationConfig, formElementProfile);
+const formCardValidator = new FormValidator(validationConfig, formElementCard);
+const popupBigImage = new PopupWithImage('.popup__photo');
 
 function handleCardClick(name, link) {
     popupBigImage.open(name, link);
@@ -70,7 +68,7 @@ const cardList = new Section({
         cardList.addItem(createCard(name, link));
     }
 }, '.elements');
-const userInfo = new UserInfo({ name: '.profile__info-title', job: '.profile__info-subtitle' });
+const userInfo = new UserInfo({ nameSelector: '.profile__info-title', jobSelector: '.profile__info-subtitle' });
 
 const popupWithFormProfile = new PopupWithForm('.popup_edit_profile', {
     submitRenderer: (formData) => {
