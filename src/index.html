@@ -16,7 +16,10 @@
         <main class="content">
             <section class="profile">
                 <div class="profile__container">
-                    <div class="profile__avatar"></div>
+                    <div class="profile__avatar">
+                        <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__image">
+                        <span class="profile__edit-avatar"></span>
+                    </div>
 
                     <div class="profile__info">
                         <h1 class="profile__info-title" id="nameInfo">Жак-Ив Кусто</h1>
@@ -50,12 +53,19 @@
                 <button type="button" class="popup__close"></button>
             </div>
         </section>
-        <section class="popup popup-photo popup_opacity">
+        <section class="popup popup__photo popup_opacity">
             <figure class="popup__figure">
                 <img class="popup__image" src="<%=require('./images/mesto.jpg')%>" alt="">
                 <figcaption class="popup__figure-caption"></figcaption>
                 <button class="popup__close" type="button"></button>
             </figure>
+        </section>
+        <section class="popup popup_delete-card">
+            <div class="popup__container">
+                <h2 class="popup__title popup__title_delete">Вы уверены?</h2>
+                <button class="popup__button popup__button_delete">Да</button>
+                <button type="button" class="popup__close"></button>
+            </div>
         </section>
     </div>
     <section class="popup popup-card">
@@ -71,8 +81,17 @@
             <button class="popup__close" type="button"></button>
         </div>
     </section>
-
-
+    <section class="popup popup_avatar">
+        <div class="popup__container">
+            <h2 class="popup__title">Обновить аватар</h2>
+            <form class="popup__form" name="popupAvatar" novalidate>
+                <input id="popup__avatar" class="popup__input popup__avatar-src" type="url" name="avatar" value="" placeholder="Ссылка на картинку" required>
+                <span class="popup__error" id="popup__avatar-error"></span>
+                <button class="popup__button" type="submit">Сохранить</button>
+            </form>
+            <button class="popup__close" type="button"></button>
+        </div>
+    </section>
 
     <template id="templ__element">
         <li class="elements__element">
@@ -80,7 +99,10 @@
             <button class="elements__delete" type="button"></button>
             <div class="elements__info">
                 <h2 class="elements__title">Байкал</h2>
-                <button class="elements__like" type="button"></button>
+                <div class="elements__likes">
+                    <button class="elements__like" type="button"></button>
+                    <p class="elements__like-counter">0</p>
+                </div>
             </div>
         </li>
     </template>
