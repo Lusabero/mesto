@@ -14,7 +14,7 @@ import {
     elementAddButton,
     formPopupProfile,
     formPopupAddElement,
-    inputList,
+    formProfileInputs,
     buttonOpenChangeAvatar,
     formPopupAvatar
 } from '../utils/constants.js';
@@ -43,50 +43,51 @@ api.getAllData()
         const userId = userInfo._id;
 
         function createdCard(item) {
-            const card = new Card(userId, item, templateElement, {
-                handleCardClick: () => {
-                    popupBigImage.open(item.name, item.link);
-                },
+            const card = new Card(userId, item, templateElement,
+                {
+                    handleCardClick: () => {
+                        popupBigImage.open(item.name, item.link);
+                    },
 
-                handleCardDelete: () => {
-                    popupWithDelete.open();
-                    popupWithDelete.setHandleSubmit(function() {
-                        api.deleteCard(card._id)
-                            .then(() => {
-                                card.handleCardRemove();
-                                popupWithDelete.close();
+                    handleCardDelete: () => {
+                        popupWithDelete.open();
+                        popupWithDelete.setHandleSubmit(function () {
+                            api.deleteCard(card._id)
+                                .then(() => {
+                                    card.handleCardRemove();
+                                    popupWithDelete.close();
+                                })
+                                .catch((err) => {
+                                    console.error(`Ошибка: ${err}`)
+                                })
+                                .finally(() => {
+                                    popupWithDelete.handleLoading('Да');
+                                });
+                        })
+                    },
+
+                    handleAddLike: () => {
+                        api.setLike(item._id)
+                            .then((item) => {
+                                card.showLikeCounter(item.likes);
+                                card.handleToggleLike();
                             })
                             .catch((err) => {
                                 console.error(`Ошибка: ${err}`)
                             })
-                            .finally(() => {
-                                popupWithDelete.handleLoading('Да');
-                            });
-                    })
-                },
+                    },
 
-                handleAddLike: () => {
-                    api.setLike(item._id)
-                        .then((item) => {
-                            card.showLikeCounter(item.likes);
-                            card.handleToggleLike();
-                        })
-                        .catch((err) => {
-                            console.error(`Ошибка: ${err}`)
-                        })
-                },
-
-                handleDeleteLike: () => {
-                    api.deleteLike(item._id)
-                        .then((item) => {
-                            card.showLikeCounter(item.likes);
-                            card.handleToggleLike();
-                        })
-                        .catch((err) => {
-                            console.error(`Ошибка: ${err}`)
-                        })
-                }
-            });
+                    handleDeleteLike: () => {
+                        api.deleteLike(item._id)
+                            .then((item) => {
+                                card.showLikeCounter(item.likes);
+                                card.handleToggleLike();
+                            })
+                            .catch((err) => {
+                                console.error(`Ошибка: ${err}`)
+                            })
+                    }
+                });
             return card.createCard();
         }
 
@@ -96,22 +97,23 @@ api.getAllData()
             }
         }, '.elements');
 
-        const popupWithFormAddElement = new PopupWithForm('.popup-card', {
-            submitRenderer: (formData) => {
-                const inputValue = { elementName: formData.nameCardTitle, link: formData.popupCardSrc }
-                api.setCard(inputValue)
-                    .then((item) => {
-                        cardList.addItem(createdCard(item));
-                        popupWithFormAddElement.close();
-                    })
-                    .catch((err) => {
-                        console.error(`Ошибка: ${err}`)
-                    })
-                    .finally(() => {
-                        popupWithFormAddElement.handleLoading('Создать');
-                    });
-            }
-        })
+        const popupWithFormAddElement = new PopupWithForm('.popup-card',
+            {
+                submitRenderer: (formData) => {
+                    const inputValue = { elementName: formData.nameCardTitle, link: formData.popupCardSrc }
+                    api.setCard(inputValue)
+                        .then((item) => {
+                            cardList.addItem(createdCard(item));
+                            popupWithFormAddElement.close();
+                        })
+                        .catch((err) => {
+                            console.error(`Ошибка: ${err}`)
+                        })
+                        .finally(() => {
+                            popupWithFormAddElement.handleLoading('Создать');
+                        });
+                }
+            })
 
         popupWithFormAddElement.setEventListeners();
 
@@ -131,41 +133,43 @@ api.getAllData()
 
 
 const popupWithDelete = new PopupWithDelete('.popup_delete-card');
-const popupBigImage = new PopupWithImage(imgPopup, titlePopup, '.popup-photo');
+const popupBigImage = new PopupWithImage(imgPopup, titlePopup, '.popup__photo');
 
-const popupWithFormProfile = new PopupWithForm('.popup_edit_profile', {
-    submitRenderer: (formData) => {
-        const inputValue = { userName: formData.nameInput, userJob: formData.jobInput };
-        api.setUserInfo(inputValue)
-            .then((data) => {
-                userInfo.setUserInfo(data);
-                popupWithFormProfile.close();
-            })
-            .catch((err) => {
-                console.error(`Ошибка: ${err}`)
-            })
-            .finally(() => {
-                popupWithFormProfile.handleLoading('Сохранить');
-            });
-    }
-})
+const popupWithFormProfile = new PopupWithForm('.popup_edit_profile',
+    {
+        submitRenderer: (formData) => {
+            const inputValue = { userName: formData.nameInput, userJob: formData.jobInput };
+            api.setUserInfo(inputValue)
+                .then((data) => {
+                    userInfo.setUserInfo(data);
+                    popupWithFormProfile.close();
+                })
+                .catch((err) => {
+                    console.error(`Ошибка: ${err}`)
+                })
+                .finally(() => {
+                    popupWithFormProfile.handleLoading('Сохранить');
+                });
+        }
+    })
 
-const popupAvatar = new PopupWithForm('.popup_avatar', {
-    submitRenderer: (formData) => {
-        const inputValue = { avatar: formData.avatar };
-        api.changeAvatar(inputValue)
-            .then((data) => {
-                userInfo.setUserInfo(data);
-                popupAvatar.close();
-            })
-            .catch((err) => {
-                console.error(`Ошибка: ${err}`)
-            })
-            .finally(() => {
-                popupAvatar.handleLoading('Сохранить');
-            });
-    }
-})
+const popupAvatar = new PopupWithForm('.popup_avatar',
+    {
+        submitRenderer: (formData) => {
+            const inputValue = { avatar: formData.avatar };
+            api.changeAvatar(inputValue)
+                .then((data) => {
+                    userInfo.setUserInfo(data);
+                    popupAvatar.close();
+                })
+                .catch((err) => {
+                    console.error(`Ошибка: ${err}`)
+                })
+                .finally(() => {
+                    popupAvatar.handleLoading('Сохранить');
+                });
+        }
+    })
 
 buttonOpenChangeAvatar.addEventListener('click', () => {
     validationFormAvatar.resetValidation();
@@ -174,7 +178,7 @@ buttonOpenChangeAvatar.addEventListener('click', () => {
 
 buttonOpenPopupProfile.addEventListener('click', () => {
     const userData = userInfo.getUserInfo();
-    inputList.forEach((input) => {
+    formProfileInputs.forEach((input) => {
         input.value = userData.name
         if (input.name === 'userJob') {
             input.value = userData.about
